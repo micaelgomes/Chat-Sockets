@@ -1,35 +1,21 @@
-    $(document).ready(() => {
-			var socket = io.connect('http://localhost:8082/');
-			var ready = false;
-		});
+/*
+ *	Arquivo de funções de interação do lado Cliente
+ * 	Para o Lado Servidor
+ *
+ */
 
-    $("#submit").submit(function(e) {
-      e.preventDefault();
-      $("#nick").fadeOut();
-      $("#chat").fadeIn();
-      var name = $("#nickname").val();
-      var time = new Date();
-      $("#name").html(name);
-      $("#time").html('First login: ' + time.getHours() + ':' + time.getMinutes());
+$(document).ready(() => {
+	//var socket = io.connect('http://localhost:8082/');
+	var ready = false;
+});
 
-      ready = true;
-      socket.emit("join", name);
-    });
+$( "input" )
+  .keyup(function(){
+    var nickname = $( this ).val();
+  })
+  .keyup();
 
-    socket.on("update", (msg) => {
-      if (ready) {
-          $('.chat').append('<li class="info">' + msg + '</li>')
-      }
-    });
+var data = new Date();
 
-    $("#textarea").keypress(function(e){
-        if(e.which == 13) {
-             var text = $("#textarea").val();
-             $("#textarea").val('');
-             var time = new Date();
-             $(".chat").append('<li class="self"><div class="msg"><span>'
-                          + $("#nickname").val() + ':</span>    <p>' + text + '</p><time>' + 
-                          time.getHours() + ':' + time.getMinutes() + '</time></div></li>');
-             socket.emit("send", text);
-        }
-    });
+console.log(`${nickname} logado às ${data.getYear()}`);
+
