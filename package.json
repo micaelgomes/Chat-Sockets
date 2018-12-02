@@ -1,9 +1,9 @@
 {
-  "name": "socketio-simple-chat",
+  "name": "Chat-socket",
   "version": "1.0.0",
-  "description": "A simple NodeJS and Socket.io chat script",
+  "description": "Chat in Real Time",
   "main": "index.js",
-  "author": "Daniel Campos <d.ericeira@hotmail.com>",
+  "author": "MicaelGoms",
   "license": "MIT",
   "repository": {
     "url": "http://",
