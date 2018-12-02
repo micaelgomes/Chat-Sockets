@@ -1,28 +1,34 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+//var siofu = require('socketio-file-upĺoad');
 
 var clients = {}; 
 
-app.get('/', function(req, res){
+app.get('/', (req, res) => {
   res.send('<h1>Servidor de mensagens habilitado.</h1>');
 });
 
-io.on("connection", function (client) {  
-    client.on("join", function(name){
+//app.use(siofu.router);
+
+io.on("connection",  (client) => {
+    //var uploader = new siofu();
+    //uploader.dir = "/home/micaellgoms/UFMA/Projects3th/Chat-Sockets/uploads/"
+    //uploader.listen(socket);
+
+    client.on("join", (name) => {
     	console.log("entrou: " + name);
         clients[client.id] = name;
         client.emit("update", "Você entrou na Sala de bate Papo.");
-        client.emit("update", "Nesta sala é proibido mandar Nudes");
         client.broadcast.emit("update", name + " entrou na Sala.")
     });
 
-    client.on("send", function(msg){
+    client.on("send", (msg) => { 
     	console.log("Message: " + msg);
         client.broadcast.emit("chat", clients[client.id], msg);
     });
 
-    client.on("disconnect", function(){
+    client.on("disconnect", () => {
     	console.log("Disconnect");
         io.emit("update", clients[client.id] + " deixou a sala.");
         delete clients[client.id];
@@ -30,6 +36,6 @@ io.on("connection", function (client) {
 });
 
 
-http.listen(8082, function(){
+http.listen(8082, () => {
   console.log('listening on port 8082');
 });
