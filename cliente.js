@@ -1,7 +1,7 @@
 $(document).ready(() => {  
     var socket = io.connect("http://localhost:8082");
     var ready = false;
-    
+
     $("#submit").submit((e) => {
 		e.preventDefault();
 		$("#nick").fadeOut();
@@ -12,26 +12,27 @@ $(document).ready(() => {
 		$("#time").html('First login: ' + time.getHours() + ':' + time.getMinutes());
 
 		ready = true;
-		socket.emit("join", name);
+		socket.emit("join", name, time);
 
 	});
 
-	$("#textarea").keypress((e) => {
+	socket.on("update", (msg) => {
+    	if (ready) {
+    		$('.chat').append('<li class="info">' + msg + '</li>')
+        
+        }
+    }); 
+
+    $("#textarea").keypress((e) => {
         if(e.which == 13) {
-        	var text = $("#textarea").val();
-        	$("#textarea").val('');
-        	var time = new Date();
-        	$(".chat").append('<li class="self"><div class="msg"><span>' + $("#nickname").val() + ':</span><p>' + text + '</p><time>' + time.getHours() + ':' + time.getMinutes() + '</time></div></li>');
-        	socket.emit("send", text);
+            var text = $("#textarea").val();
+            $("#textarea").val('');
+            var time = new Date();
+            $(".chat").append('<li class="self"><div class="msg"><span>' + $("#nickname").val() + ':</span><p>' + text + '</p><time>' + time.getHours() + ':' + time.getMinutes() + '</time></div></li>');
+            socket.emit("send", text);
 
         }
     });
-
-    socket.on("update", (msg) => {
-    	if (ready) {
-    		$('.chat').append('<li class="info">' + msg + '</li>')
-    	}
-    }); 
 
     socket.on("chat", (client,msg) => {
     	if (ready) {
@@ -41,3 +42,4 @@ $(document).ready(() => {
         }
     });
 });
+
