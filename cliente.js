@@ -1,7 +1,7 @@
 $(document).ready(() => {  
     var socket = io.connect("http://localhost:8082");
     var ready = false;
-
+    
     $("#submit").submit((e) => {
 		e.preventDefault();
 		$("#nick").fadeOut();
@@ -27,7 +27,6 @@ $(document).ready(() => {
         }
     });
 
-
     socket.on("update", (msg) => {
     	if (ready) {
     		$('.chat').append('<li class="info">' + msg + '</li>')
@@ -42,4 +41,3 @@ $(document).ready(() => {
         }
     });
 });
-

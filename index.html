@@ -33,10 +33,15 @@
     <ol class="chat"></ol>
 
     <input class="textarea" type="text" placeholder="Insira sua mensagem aqui..." id="textarea" />
+    <form class="upload_style" id="form">
+      <input type="file" id="file" multiple />
+      <input type="submit" value="Upload" />
+    </form>
   </div>
 </main>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/socket.io-client/dist/socket.io.js"></script>
+    <script src="node_modules/socket.io-file-client/socket.io-file-client.js"></script>
     <script src="cliente.js"></script>
 </body>
 </html>

@@ -1,20 +1,14 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-//var siofu = require('socketio-file-upĺoad');
 
 var clients = {}; 
 
 app.get('/', (req, res) => {
-  res.send('<h1>Servidor de mensagens habilitado.</h1>');
+    res.send('<h1>Servidor de mensagens habilitado.</h1>');
 });
 
-//app.use(siofu.router);
-
 io.on("connection",  (client) => {
-    //var uploader = new siofu();
-    //uploader.dir = "/home/micaellgoms/UFMA/Projects3th/Chat-Sockets/uploads/"
-    //uploader.listen(socket);
 
     client.on("join", (name) => {
     	console.log("entrou: " + name);
@@ -34,7 +28,6 @@ io.on("connection",  (client) => {
         delete clients[client.id];
     });
 });
-
 
 http.listen(8082, () => {
   console.log('listening on port 8082');
